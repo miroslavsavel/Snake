@@ -1,16 +1,24 @@
-# This is a sample Python script.
+import sys
+import pygame
+from settings import Settings
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+class SnakeGame:
+    """Overall class to manage game assets and behviour"""
 
+    def __init__(self):
+        pygame.init()
+        self.settings = Settings() #in the Settings class are defined properties of game
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        pygame.display.set_caption("SSSnake")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    def run_game(self):
+        """Start the main loop for the game"""
+        while True:
+            self._check_events()
+            self.ship.update()
+            self._update_screen()
 
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    #Make a game instance and run the game
+    game_instance = SnakeGame()
+    game_instance.run_game()
