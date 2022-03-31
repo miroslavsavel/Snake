@@ -20,8 +20,10 @@ class Snake:
 
     def draw_snake(self):
         for block in self.body:
+            x_pos = block.x * cell_size
+            y_pos = block.y * cell_size
             # create a rect
-            block_rect = pygame.Rect(block.x * cell_size, block.y * cell_size, cell_size, cell_size)
+            block_rect = pygame.Rect(x_pos, y_pos, cell_size, cell_size)
             # draw the rectangle
             pygame.draw.rect(screen,(180,126,114),block_rect)
 
