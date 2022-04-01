@@ -12,11 +12,12 @@ class Fruit:
 
     def draw_fruit(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size,cell_size,cell_size)
-        pygame.draw.rect(screen, (126,166,114), fruit_rect)
+        pygame.draw.rect(screen, (183,166,114), fruit_rect)
 
 class Snake:
     def __init__(self):
         self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
+        self.direction = Vector2(1,0) # moving to the right
 
     def draw_snake(self):
         for block in self.body:
@@ -25,7 +26,13 @@ class Snake:
             # create a rect
             block_rect = pygame.Rect(x_pos, y_pos, cell_size, cell_size)
             # draw the rectangle
-            pygame.draw.rect(screen,(180,126,114),block_rect)
+            pygame.draw.rect(screen,(180,116,114),block_rect)
+
+    """We would like to execute this method at certain intervals => timer"""
+    def move_snake(self):
+        body_copy = self.body[:-1]  # we will copy only first two elements
+        body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
+        self.body = body_copy[:]
 
 pygame.init()
 cell_size = 40
@@ -34,11 +41,19 @@ screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_si
 clock = pygame.time.Clock()
 fruit = Fruit()
 snake = Snake()
+
+#custom trigger
+SCREEN_UPDATE = pygame.USEREVENT
+# how often we would like to trigger our custom event, in ms
+pygame.time.set_timer(SCREEN_UPDATE,150)
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == SCREEN_UPDATE:
+            snake.move_snake()
     screen.fill((175,215,70))
     fruit.draw_fruit()
     snake.draw_snake()
