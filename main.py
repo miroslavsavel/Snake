@@ -37,13 +37,31 @@ class Snake:
         body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
         self.body = body_copy[:]
 
+class MAIN_GAME_LOGIC:
+    def __init__(self):
+        self.snake = Snake()
+        self.fruit = Fruit()
+
+    def update(self):
+        self.snake.move_snake()
+        self.check_collision()
+
+    def draw_elements(self):
+        self.fruit.draw_fruit()
+        self.snake.draw_snake()
+
+    """Check if fruit and snake are on the same spot on the grid"""
+    def check_collision(self):
+        if self.fruit.pos == self.snake.body[0]:
+            print('snack')
+
 pygame.init()
 cell_size = 40
 cell_number = 20
 screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size))
 clock = pygame.time.Clock()
-fruit = Fruit()
-snake = Snake()
+
+main_game = MAIN_GAME_LOGIC()
 
 #custom trigger
 SCREEN_UPDATE = pygame.USEREVENT
@@ -56,19 +74,18 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == SCREEN_UPDATE:
-            snake.move_snake()
+            main_game.update()
         if event.type == pygame.KEYDOWN:
             # Controlling snake direction
             if event.key == pygame.K_UP:
-                snake.direction = Vector2(0,-1)
+                main_game.snake.direction = Vector2(0,-1)
             if event.key == pygame.K_DOWN:
-                snake.direction = Vector2(0,1)
+                main_game.snake.direction = Vector2(0,1)
             if event.key == pygame.K_RIGHT:
-                snake.direction = Vector2(1,0)
+                main_game.snake.direction = Vector2(1,0)
             if event.key == pygame.K_LEFT:
-                snake.direction = Vector2(-1,0)
+                main_game.snake.direction = Vector2(-1,0)
     screen.fill((175,215,70))
-    fruit.draw_fruit()
-    snake.draw_snake()
+    main_game.draw_elements()
     pygame.display.update()
     clock.tick(60)
