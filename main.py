@@ -6,13 +6,16 @@ import random
 
 class Fruit:
     def __init__(self):
-        self.x = random.randint(0, cell_number-1)
-        self.y = random.randint(0, cell_number-1)
-        self.pos = Vector2(self.x, self.y)
+        self.randomize_position()
 
     def draw_fruit(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size,cell_size,cell_size)
         pygame.draw.rect(screen, (183,166,114), fruit_rect)
+
+    def randomize_position(self):
+        self.x = random.randint(0, cell_number - 1)
+        self.y = random.randint(0, cell_number - 1)
+        self.pos = Vector2(self.x, self.y)
 
 class Snake:
     def __init__(self):
@@ -54,6 +57,9 @@ class MAIN_GAME_LOGIC:
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
             print('snack')
+            # reposition the fruit
+            self.fruit.randomize_position()
+            # add another block to the snake
 
 pygame.init()
 cell_size = 40
