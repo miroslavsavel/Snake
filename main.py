@@ -16,6 +16,7 @@ class Fruit:
 
 class Snake:
     def __init__(self):
+        # https://humberto.io/blog/exploring-pygame-2-drawing-on-screen/
         self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
         self.direction = Vector2(1,0) # moving to the right
 
@@ -28,8 +29,10 @@ class Snake:
             # draw the rectangle
             pygame.draw.rect(screen,(180,116,114),block_rect)
 
+
     """We would like to execute this method at certain intervals => timer"""
     def move_snake(self):
+        # snake move consist of removing last element of snake
         body_copy = self.body[:-1]  # we will copy only first two elements
         body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
         self.body = body_copy[:]
@@ -54,6 +57,16 @@ while True:
             sys.exit()
         if event.type == SCREEN_UPDATE:
             snake.move_snake()
+        if event.type == pygame.KEYDOWN:
+            # Controlling snake direction
+            if event.key == pygame.K_UP:
+                snake.direction = Vector2(0,-1)
+            if event.key == pygame.K_DOWN:
+                snake.direction = Vector2(0,1)
+            if event.key == pygame.K_RIGHT:
+                snake.direction = Vector2(1,0)
+            if event.key == pygame.K_LEFT:
+                snake.direction = Vector2(-1,0)
     screen.fill((175,215,70))
     fruit.draw_fruit()
     snake.draw_snake()
