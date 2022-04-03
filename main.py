@@ -41,11 +41,14 @@ class Snake:
             body_copy = self.body[:]  # we will copy only first two elements
             body_copy.insert(0,body_copy[0] + self.direction)  # insert new element right before at the start f the list
             self.body = body_copy[:]
+            self.new_block = False
         else:
             # snake move consist of removing last element of snake
             body_copy = self.body[:-1]  # we will copy only first two elements
             body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
             self.body = body_copy[:]
+
+
 
     """Add block to the body after eating the fruit"""
     def add_block(self):
