@@ -76,6 +76,11 @@ class MAIN_GAME_LOGIC:
             # add another block to the snake
             self.snake.add_block()
 
+    def check_fail(self):
+        print(fail)
+        # check if snake is out of screen boundary
+        #check collision with itself - hit to the snake body
+
 pygame.init()
 cell_size = 40
 cell_number = 20
