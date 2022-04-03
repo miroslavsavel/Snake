@@ -22,6 +22,7 @@ class Snake:
         # https://humberto.io/blog/exploring-pygame-2-drawing-on-screen/
         self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
         self.direction = Vector2(1,0) # moving to the right
+        self.new_block = False
 
     def draw_snake(self):
         for block in self.body:
@@ -35,10 +36,20 @@ class Snake:
 
     """We would like to execute this method at certain intervals => timer"""
     def move_snake(self):
-        # snake move consist of removing last element of snake
-        body_copy = self.body[:-1]  # we will copy only first two elements
-        body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
-        self.body = body_copy[:]
+        if self.new_block == True:
+            # grow snake body after eating the fruit
+            body_copy = self.body[:]  # we will copy only first two elements
+            body_copy.insert(0,body_copy[0] + self.direction)  # insert new element right before at the start f the list
+            self.body = body_copy[:]
+        else:
+            # snake move consist of removing last element of snake
+            body_copy = self.body[:-1]  # we will copy only first two elements
+            body_copy.insert(0, body_copy[0] + self.direction)      #insert new element right before at the start f the list
+            self.body = body_copy[:]
+
+    """Add block to the body after eating the fruit"""
+    def add_block(self):
+        self.new_block = True
 
 class MAIN_GAME_LOGIC:
     def __init__(self):
@@ -60,6 +71,7 @@ class MAIN_GAME_LOGIC:
             # reposition the fruit
             self.fruit.randomize_position()
             # add another block to the snake
+            self.snake.add_block()
 
 pygame.init()
 cell_size = 40
