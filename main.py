@@ -20,7 +20,7 @@ class Fruit:
 class Snake:
     def __init__(self):
         # https://humberto.io/blog/exploring-pygame-2-drawing-on-screen/
-        self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
+        self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
         self.direction = Vector2(1,0) # moving to the right
         self.new_block = False
 
@@ -85,7 +85,10 @@ class MAIN_GAME_LOGIC:
         # UP and BOTTOM
         if not 0 <= self.snake.body[0].y < cell_number:
             self.game_over()
-        #check collision with itself - hit to the snake body
+        #check collision with itself - hit to the snake body, if head collide with every block
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.game_over()
 
     def game_over(self):
         pygame.quit()
