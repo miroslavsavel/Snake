@@ -62,6 +62,7 @@ class MAIN_GAME_LOGIC:
     def update(self):
         self.snake.move_snake()
         self.check_collision()
+        self.check_fail()
 
     def draw_elements(self):
         self.fruit.draw_fruit()
@@ -77,9 +78,18 @@ class MAIN_GAME_LOGIC:
             self.snake.add_block()
 
     def check_fail(self):
-        print(fail)
         # check if snake is out of screen boundary
+        # LEFT and RIGHT
+        if not 0 <= self.snake.body[0].x < cell_number:
+            self.game_over()
+        # UP and BOTTOM
+        if not 0 <= self.snake.body[0].y < cell_number:
+            self.game_over()
         #check collision with itself - hit to the snake body
+
+    def game_over(self):
+        pygame.quit()
+        sys.exit()
 
 pygame.init()
 cell_size = 40
